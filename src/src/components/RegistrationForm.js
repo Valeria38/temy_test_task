@@ -30,7 +30,23 @@ class RegistrationForm extends Component {
         this.props.onUpdate();
       })
       .catch(error => console.log(error))
-      .finally(() => console.log('POST request sent'));
+      .finally(() => {
+        console.log('POST request sent');
+        this.setState({
+          name: '',
+          email: '',
+          country_id: '',
+          state_id: '',
+          city_id: '',
+          phone_number: '',
+          address: null,
+          about_me: null
+        });
+        //reset select fields
+        [...document.getElementsByClassName('selectField')].forEach(
+          element => (element.selected = true)
+        );
+      });
   };
 
   handleChange = (title, event) => {
@@ -58,6 +74,7 @@ class RegistrationForm extends Component {
                 type='text'
                 placeholder='Name'
                 id='name'
+                value={this.state.name}
                 onChange={event => this.handleChange('name', event)}
               />
             </FormGroup>
@@ -73,6 +90,7 @@ class RegistrationForm extends Component {
                 type='email'
                 placeholder='Email'
                 id='email'
+                value={this.state.email}
                 onChange={event => this.handleChange('email', event)}
               />
             </FormGroup>
@@ -92,7 +110,7 @@ class RegistrationForm extends Component {
                 id='country'
                 onChange={event => this.handleChange('country_id', event)}
               >
-                <option />
+                <option className='selectField' selected />
                 {this.props.countries.map(country => (
                   <option key={country[1]} value={country[1]}>
                     {country[0]}
@@ -116,7 +134,7 @@ class RegistrationForm extends Component {
                 id='state'
                 onChange={event => this.handleChange('state_id', event)}
               >
-                <option />
+                <option className='selectField' />
                 {this.props.states.map(state => (
                   <option key={state[1]} value={state[1]}>
                     {state[0]}
@@ -137,7 +155,7 @@ class RegistrationForm extends Component {
                 id='city'
                 onChange={event => this.handleChange('city_id', event)}
               >
-                <option />
+                <option className='selectField' />
                 {this.props.cities
                   .filter(city => {
                     return city[1] === this.state.state_id;
@@ -164,6 +182,7 @@ class RegistrationForm extends Component {
                 type='text'
                 placeholder='Phone number'
                 id='phoneNumber'
+                value={this.state.phone_number}
                 onChange={event => this.handleChange('phone_number', event)}
               />
             </FormGroup>
@@ -175,6 +194,7 @@ class RegistrationForm extends Component {
                 type='text'
                 placeholder='Address'
                 id='address'
+                value={this.state.address || ''}
                 onChange={event => this.handleChange('address', event)}
               />
             </FormGroup>
@@ -188,6 +208,7 @@ class RegistrationForm extends Component {
             maxLength='500'
             name='text'
             id='about'
+            value={this.state.about_me || ''}
             onChange={event => this.handleChange('about_me', event)}
           />
         </FormGroup>
