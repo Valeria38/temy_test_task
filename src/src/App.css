@@ -9,13 +9,14 @@
   height: 100%;
   border: 1px solid silver;
   border-radius: 5px;
-}
-.login-form input:required {
-  border-bottom: 2px solid rgb(0, 131, 0);
-}
-.login-form input:invalid {
-  border-bottom: 2px solid rgb(255, 53, 53);
+  color: #333;
 }
 .login-form .hidden {
   display: none;
+}
+.login-form input:required {
+  border-bottom: 2px solid rgb(13, 194, 13);
+}
+.login-form input:invalid {
+  border-bottom: 2px solid rgb(223, 15, 0);
 }

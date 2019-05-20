@@ -30,7 +30,9 @@ class App extends Component {
             ]
           }));
         })
-      );
+      )
+      .catch(error => console.log(error))
+      .finally(() => console.log('Request sent ', type));
   }
 
   componentDidMount() {
@@ -38,21 +40,33 @@ class App extends Component {
       .then(response => response.json())
       .then(users => {
         this.setState({ users });
-      });
+      })
+      .catch(error => console.log(error))
+      .finally(() => console.log('Request sent ', 'users'));
 
     this.getLocation('countries');
     this.getLocation('states');
     this.getLocation('cities');
   }
 
+  getUsersAfterUpdate = () => {
+    fetch('http://localhost:3000/users')
+      .then(response => response.json())
+      .then(users => {
+        this.setState({ users });
+      })
+      .catch(error => console.log(error))
+      .finally(() => console.log('Request sent', 'updating users'));
+  };
+
   render() {
-    // console.log(this.state.states);
     return (
       <div className='App'>
         <RegistrationForm
           countries={this.state.countries}
           states={this.state.states}
           cities={this.state.cities}
+          onUpdate={this.getUsersAfterUpdate}
         />
         <Users
           users={this.state.users}

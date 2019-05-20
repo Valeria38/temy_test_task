@@ -15,15 +15,25 @@ class RegistrationForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    const dataToSend = { ...this.state };
 
-    const data = { ...this.state };
-    const dataToSend = {};
-
-    console.log(data);
+    fetch('http://localhost:3000/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataToSend)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.props.onUpdate();
+      })
+      .catch(error => console.log(error))
+      .finally(() => console.log('POST request sent'));
   };
 
   handleChange = (title, event) => {
-    console.log('handlechange ', title, event.target.value);
     this.setState({
       [title]: event.target.value
     });
@@ -32,13 +42,15 @@ class RegistrationForm extends Component {
   render() {
     return (
       <Form className='login-form' onSubmit={this.handleSubmit}>
-        <h1>Create a new user</h1>
+        <h1>Create new user</h1>
         <hr />
 
         <Row form>
           <Col md={6}>
             <FormGroup>
-              <Label for='name'>Name *</Label>
+              <Label for='name'>
+                Name <span className='text-danger'>*</span>
+              </Label>
               <Input
                 required
                 pattern='[A-Za-z]+'
@@ -52,7 +64,9 @@ class RegistrationForm extends Component {
           </Col>
           <Col md={6}>
             <FormGroup>
-              <Label for='email'>Email *</Label>
+              <Label for='email'>
+                Email <span className='text-danger'>*</span>
+              </Label>
               <Input
                 required
                 pattern='\w+@[a-z]+\.[a-z]+'
@@ -68,7 +82,9 @@ class RegistrationForm extends Component {
         <Row form>
           <Col md={12}>
             <FormGroup>
-              <Label for='country'>Country *</Label>
+              <Label for='country'>
+                Country <span className='text-danger'>*</span>
+              </Label>
               <Input
                 required
                 type='select'
@@ -90,7 +106,9 @@ class RegistrationForm extends Component {
         <Row form>
           <Col className={this.state.country_id === '1' ? '' : 'hidden'} md={6}>
             <FormGroup>
-              <Label for='state'>State *</Label>
+              <Label for='state'>
+                State <span className='text-danger'>*</span>
+              </Label>
               <Input
                 required
                 type='select'
@@ -109,7 +127,9 @@ class RegistrationForm extends Component {
           </Col>
           <Col className={this.state.state_id !== '' ? '' : 'hidden'} md={6}>
             <FormGroup>
-              <Label for='city'>City *</Label>
+              <Label for='city'>
+                City <span className='text-danger'>*</span>
+              </Label>
               <Input
                 required
                 type='select'
@@ -134,7 +154,9 @@ class RegistrationForm extends Component {
         <Row>
           <Col md={6}>
             <FormGroup>
-              <Label for='phoneNumber'>Phone number *</Label>
+              <Label for='phoneNumber'>
+                Phone number <span className='text-danger'>*</span>
+              </Label>
               <Input
                 required
                 pattern='\d{10}'
@@ -171,7 +193,7 @@ class RegistrationForm extends Component {
         </FormGroup>
 
         <Button color='success' className='btn-lg btn-block'>
-          Log In
+          Create
         </Button>
       </Form>
     );

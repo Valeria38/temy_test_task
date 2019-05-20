@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  ListGroup,
-  ListGroupItem,
-  Col,
-  ListGroupItemHeading,
-  ListGroupItemText
-} from 'reactstrap';
+import { Col, Table, ListGroup, ListGroupItem } from 'reactstrap';
 
 class Users extends Component {
   state = {
@@ -22,6 +16,7 @@ class Users extends Component {
         isLoaded: true
       };
     }
+    return null;
   }
 
   convertNumberToLocation = (type, id) => {
@@ -42,32 +37,22 @@ class Users extends Component {
 
   render() {
     const { users } = this.props;
-
     return (
       <>
-        <p>Users:</p>
-        <Col xs='12' md={{ size: 8, offset: 2 }}>
-          <ListGroup>
-            {users.map(user => (
-              <ListGroupItem color='success' key={user.id}>
-                <ListGroupItemHeading>{user.name}</ListGroupItemHeading>
-                <ListGroupItemText>{user.email}</ListGroupItemText>
-                <ListGroupItemText>{user.phone_number}</ListGroupItemText>
-                <ListGroupItemText>
-                  {this.convertNumberToLocation('country_id', +user.country_id)}
-                </ListGroupItemText>
-                <ListGroupItemText>
-                  {this.convertNumberToLocation('state_id', user.state_id)}
-                </ListGroupItemText>
-                <ListGroupItemText>
-                  {this.convertNumberToLocation('city_id', user.city_id)}
-                </ListGroupItemText>
-                <ListGroupItemText>
-                  {new Date(user.createdAt).toLocaleString()}
-                </ListGroupItemText>
+        <h1>Users:</h1>
+        <Col xs={{ size: 10, offset: 1 }} sm='10' md={{ size: 6, offset: 3 }}>
+          {users.map(user => (
+            <ListGroup key={user.id}>
+              <ListGroupItem color='success'>
+                <b>Name:</b> {user.name}, <b>Email:</b> {user.email},{' '}
+                <b>Phone:</b> {user.phone_number}, <b>Location:</b>{' '}
+                {this.convertNumberToLocation('country_id', +user.country_id)},{' '}
+                {this.convertNumberToLocation('state_id', user.state_id)},{' '}
+                {this.convertNumberToLocation('city_id', user.city_id)},{' '}
+                <b>Created at:</b> {new Date(user.createdAt).toLocaleString()}
               </ListGroupItem>
-            ))}
-          </ListGroup>
+            </ListGroup>
+          ))}
         </Col>
       </>
     );
