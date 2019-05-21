@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Table, ListGroup, ListGroupItem } from 'reactstrap';
+import { Col, ListGroup, ListGroupItem } from 'reactstrap';
 
 class Users extends Component {
   state = {
